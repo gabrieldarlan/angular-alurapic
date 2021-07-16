@@ -2,23 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 //
-import { SignInComponent } from './home/signin/signin.component';
-import { SignUpComponent } from './home/signup/signup.component';
 import { PhotoFormComponent } from './photos/photo-form/photo-form.component';
 import { PhotoListComponent } from './photos/photo-list/photo-list.component';
 import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
 const routes: Routes = [
   {
     path: '',
-    component: SignInComponent,
-    // tslint:disable-next-line: comment-format
-    //!verificar porque quando eu coloco a tela de login fica em branco
-    // canActivate: [AuthGuard],
+    pathMatch: 'full',
+    redirectTo: 'home',
   },
+
   {
-    path: 'signup',
-    component: SignUpComponent,
+    path: 'home',
+    loadChildren: './home/home.module#HomeModule',
   },
+
   {
     path: 'user/:userName',
     component: PhotoListComponent,
@@ -36,7 +34,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
